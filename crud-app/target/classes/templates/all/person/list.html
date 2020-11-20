@@ -1,0 +1,56 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Person Listing</title>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+
+          th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.css}"
+          rel="stylesheet" media="screen"/>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+  </head>
+  <body>
+<div class="container">
+    <h1>Person Listing</h1>
+  <div>
+    <p><a href="create">Create New Person</a></p>
+    <th:block th:unless="${#lists.isEmpty(persons)}">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email Address</th>
+            <th>Associated Client</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <th:block th:each="person: ${persons}" >
+            <tr>
+              <td th:text="${person.firstName}">First</td>
+              <td th:text="${person.lastName}">Last</td>
+              <td th:text="${person.emailAddress}">first.last@email.com</td>
+              <td th:text= "${person.client != null} ? ${person.client.name} : '(no associated client)'">client</td>
+
+
+              <td>
+                <a th:href="'edit/' + ${person.personId}">Edit Person</a>
+                <a th:href="'delete/' + ${person.personId}">Delete Person</a>
+              </td>
+            </tr>
+          </th:block>
+        </tbody>
+      </table>
+    </th:block>
+    <th:block th:if="${#lists.isEmpty(persons)}">
+      <p>No results found.</p>
+    </th:block>
+  </div>
+</div>
+  </body>
+</html>
